@@ -1,25 +1,38 @@
 package main
 
-import "fmt"
+import (
+	"github.com/gofiber/fiber/v2"
+)
 
 // Struct User
 type User struct {
- ID   int
- Name string
- Age  int
-}
-
-// Fungsi untuk menampilkan data user
-func printUser(user User) {
- fmt.Printf("ID: %d\n", user.ID)
- fmt.Printf("Name: %s\n", user.Name)
- fmt.Printf("Age: %d\n", user.Age)
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Age  int    `json:"age"`
 }
 
 func main() {
- // Inisialisasi struct User dengan data
- user := User{ID: 1, Name: "Miqdam", Age: 21}
+	app := fiber.New()
 
- // Memanggil fungsi untuk mencetak data user
- printUser(user)
+	// Endpoint GET /user
+	app.Get("/user", func(c *fiber.Ctx) error {
+		user := User{ID: 1, Name: "Miqdam", Age: 21}
+		return c.JSON(user)
+	})
+
+	app.Post("/user", func(c *fiber.Ctx) error {
+	var user User
+
+	if err := c.BodyParser(&user); err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("Invalid JSON")
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "User berhasil dibuat",
+		"data":    user,
+	})
+})
+
+
+	app.Listen(":3000")
 }
