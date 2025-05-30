@@ -28,7 +28,7 @@ func main() {
 	}
 
 	return c.JSON(fiber.Map{
-		"message": "User berhasil dibuat",
+		"message": "User berhasil dibuat ya guys",
 		"data":    user,
 	})
 })
