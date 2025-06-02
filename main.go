@@ -16,7 +16,7 @@ func main() {
 
 	// Endpoint GET /user
 	app.Get("/user", func(c *fiber.Ctx) error {
-		user := User{ID: 1, Name: "Miqdam sn", Age: 20}
+		user := User{ID: 1, Name: "Miqdam syiam ", Age: 20}
 		return c.JSON(user)
 	})
 
